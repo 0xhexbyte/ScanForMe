@@ -11,4 +11,4 @@ def scanit(ip):
 	for element in answered_list:
 		print(element[1].psrc + "\t\t" +element[1].hwsrc)
 
-scanit("192.168.222.2")
+scanit("Enter IP here")

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import scapy.all as scapy
-import optparse
+import argparse
 
 def scanit(ip):
 	arp_request = scapy.ARP(pdst=ip)
@@ -19,9 +19,9 @@ def printResult(results_list):
 	for client in results_list:
 		print (client["ip"]+"\t\t"+client["mac"])
 def getInput():
-	parser = optparse.OptionParser()
-	parser.add_option("-t","--target",dest="ip",help="Use the -t, --target flag to mention the target IP address/range.")
-	(options, arguments) = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-t","--target",dest="ip",help="Use the -t, --target flag to mention the target IP address/range.")
+	options = parser.parse_args()
 	return options.ip
 	
 ip = getInput()

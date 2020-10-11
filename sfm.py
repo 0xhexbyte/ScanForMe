@@ -1,14 +1,29 @@
 #!/usr/bin/python
 
 import scapy.all as scapy
+import optparse
 
 def scanit(ip):
 	arp_request = scapy.ARP(pdst=ip)
 	broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
 	combined_request = broadcast/arp_request
-	(answered_list, unanswered_list) = scapy.srp(combined_request, timeout=1, verbose=False)
-	print("IP\t\t\tMAC Address\n--------------------------------------------")
+	answered_list = scapy.srp(combined_request, timeout=1, verbose=False)[0]
+	clients_list=[]	
 	for element in answered_list:
-		print(element[1].psrc + "\t\t" +element[1].hwsrc)
+		client_dict={"ip":element[1].psrc, "mac":element[1].hwsrc}
+		clients_list.append(client_dict)
+	return clients_list
 
-scanit("Enter IP here")
+def printResult(results_list):
+	print("IP\t\t\tMAC Address\n--------------------------------------------")
+	for client in results_list:
+		print (client["ip"]+"\t\t"+client["mac"])
+def getInput():
+	parser = optparse.OptionParser()
+	parser.add_option("-t","--target",dest="ip",help="Use the -t, --target flag to mention the target IP address/range.")
+	(options, arguments) = parser.parse_args()
+	return options.ip
+	
+ip = getInput()
+clients_list = scanit(ip)
+printResult(clients_list)

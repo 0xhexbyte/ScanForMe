@@ -1,2 +1,2 @@
 # ScanForMe
-The scanner that NMAP told you about.
+The scanner that netdiscover told you about.

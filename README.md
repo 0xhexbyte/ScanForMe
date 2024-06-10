@@ -1,5 +1,5 @@
 # ScanForMe
-The scanner that netdiscover told you about.
+A simple python based scanner.
 
 ## Usage
 ```
